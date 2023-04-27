@@ -10,8 +10,8 @@ void JoystickView::onLoad()
 {
 	_globalCvarManager = cvarManager;
 
-	myImage = std::make_shared<ImageWrapper>(gameWrapper->GetDataFolder() / "OctaneHitbox.png", true, true);
-	arrowImage = std::make_shared<ImageWrapper>(gameWrapper->GetDataFolder() / "red-up-arrow.png", true, true);
+	myImage = std::make_shared<ImageWrapper>(gameWrapper->GetDataFolder() / "JoystickView" / "OctaneHitbox.png", true, true);
+	arrowImage = std::make_shared<ImageWrapper>(gameWrapper->GetDataFolder() / "JoystickView" / "red-up-arrow.png", true, true);
 
 	gameWrapper->HookEvent("Function Engine.GameViewportClient.Tick", std::bind(&JoystickView::onTick, this, std::placeholders::_1));
 }
