@@ -2,6 +2,7 @@
 
 ## Installation :
 
+- Download JoystickView.zip in the realease v1.0
 - Go in the bakkesmod folder and drag/drop the data + plugins folders
 - ingame, in the bakkesmod window go in the plugins tab -> pluginmanager, click on open plugin manager and check JoystickView to load it
 
