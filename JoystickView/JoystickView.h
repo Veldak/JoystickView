@@ -22,6 +22,8 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	virtual void onLoad();
 	virtual void onUnload();
 
+	float arrowLocX = 149.f;
+	float arrowLocY = 253.f;
 	float arrowWidth = 25.f;
 	float arrowHeight = 100.f;
 

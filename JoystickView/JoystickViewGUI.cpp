@@ -20,6 +20,8 @@ void JoystickView::RenderSettings()
 			});
 	}
 
+	ImGui::SliderFloat("Arrow Location X", &arrowLocX, 0.f, 500.f);
+	ImGui::SliderFloat("Arrow Location Y", &arrowLocY, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Width", &arrowWidth, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow arrowHeight", &arrowHeight, 0.f, 500.f);
 }
@@ -59,6 +61,9 @@ void JoystickView::Render()
 	float angleDegrees = angleRadians * (180.0f / M_PI);
 	float angle = (((6.28f * angleDegrees) / 360.f) + 3.14f) * -1;
 
+	if (controllerInput.Steer == 0 && controllerInput.Pitch == 0) //makes the arrow pointing up at starting position
+		angle = -6.28f;
+
 	/*ImGui::Text("degree : %f", angleDegrees);
 	ImGui::Text("angle : %f", angle);
 
@@ -71,7 +76,7 @@ void JoystickView::Render()
 	ImVec2 p = ImGui::GetCursorScreenPos();
 
 	float leftStickRadius = 32 * scale;
-	ImVec2 leftStickCenter = ImVec2(p.x + 148, p.y + 253);
+	ImVec2 leftStickCenter = ImVec2(p.x + arrowLocX, p.y + arrowLocY);
 
 	Vector2F rect = myImage->GetSizeF();
 	ImGui::Image(myImage->GetImGuiTex(), { rect.X, rect.Y });
