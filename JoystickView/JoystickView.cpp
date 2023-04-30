@@ -30,7 +30,7 @@ void JoystickView::onTick(std::string eventName) //Reminder : This function is c
 		}
 		else
 		{
-			controllerInput.Steer = 0; //X (-1 to 1)
+			controllerInput.Yaw = 0; //X (-1 to 1)
 			controllerInput.Pitch = 0; //Y (-1 to 1)
 		}
 	}
