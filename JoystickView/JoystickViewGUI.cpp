@@ -23,7 +23,7 @@ void JoystickView::RenderSettings()
 	ImGui::SliderFloat("Arrow Location X", &arrowLocX, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Location Y", &arrowLocY, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Width", &arrowWidth, 0.f, 500.f);
-	ImGui::SliderFloat("Arrow arrowHeight", &arrowHeight, 0.f, 500.f);
+	ImGui::SliderFloat("Arrow Height", &arrowHeight, 0.f, 500.f);
 }
 
 
@@ -42,20 +42,9 @@ void JoystickView::Render()
 		return;
 	}
 
-
-
-
-	float scale = (1 == 1 ? 2.0f : 1.0f);
-	ImDrawList* drawList = ImGui::GetWindowDrawList();
-
-	/*std::string valueX = "x : " + std::to_string(controllerInput.Steer);
-	ImGui::Text(valueX.c_str());
-	std::string valueY = "y : " + std::to_string(controllerInput.Pitch);
-	ImGui::Text(valueY.c_str());*/
-
 	// Dodge angle snapping
-	controllerInput.Yaw = (std::abs(controllerInput.Yaw) < 0.1 * std::abs(controllerInput.Pitch)) 0 ? controllerInput.Yaw;
-	controllerInput.Pitch = (std::abs(controllerInput.Pitch) < 0.1 * std::abs(controllerInput.Yaw)) 0 ? controllerInput.Pitch;
+	controllerInput.Yaw = (std::abs(controllerInput.Yaw) < 0.1 * std::abs(controllerInput.Pitch)) ? 0 : controllerInput.Yaw;
+	controllerInput.Pitch = (std::abs(controllerInput.Pitch) < 0.1 * std::abs(controllerInput.Yaw)) ? 0 : controllerInput.Pitch;
 
 	// Calculate the angle in radians
 	float angleRadians = std::atan2(controllerInput.Yaw, controllerInput.Pitch);
@@ -68,29 +57,16 @@ void JoystickView::Render()
 		angle = -6.28f;
 
 	/*ImGui::Text("degree : %f", angleDegrees);
-	ImGui::Text("angle : %f", angle);
-
-	static float widthTest = 0.f;
-	ImGui::SliderFloat("widthTest", &widthTest, 0.f, 400.f);
-	static float hightTest = 0.f;
-	ImGui::SliderFloat("hightTest", &hightTest, 0.f, 400.f);*/
+	ImGui::Text("angle : %f", angle);*/
 
 	ImGui::SetCursorScreenPos(ImVec2(ImGui::GetCursorScreenPos().x + 20, ImGui::GetCursorScreenPos().y + 20));
+
 	ImVec2 p = ImGui::GetCursorScreenPos();
-
-	float leftStickRadius = 32 * scale;
 	ImVec2 leftStickCenter = ImVec2(p.x + arrowLocX, p.y + arrowLocY);
-
 	Vector2F rect = myImage->GetSizeF();
+
 	ImGui::Image(myImage->GetImGuiTex(), { rect.X, rect.Y });
-	//drawList->AddImage(myImage->GetImGuiTex(), p, { p.x + rect.X, p.y + rect.Y });
 	ImageRotated(arrowImage->GetImGuiTex(), leftStickCenter, ImVec2(arrowWidth, arrowHeight), angle);
-	//drawList->AddCircle(leftStickCenter, 24 * scale, WHITE, 32, 2 * scale);
-
-
-	ImVec2 JoystickPos = ImVec2(leftStickCenter.x + (controllerInput.Yaw * 8 * scale * 4), leftStickCenter.y + (controllerInput.Pitch * 8 * scale * 4));
-	//drawList->AddLine(ImVec2(leftStickCenter), JoystickPos, WHITE, 1.f);
-
 
 	ImGui::End();
 
