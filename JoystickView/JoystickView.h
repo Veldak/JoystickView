@@ -28,6 +28,7 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	float arrowHeight = 100.f;
 
 
+	bool FreezeArrowWhenCarDontHaveFlip = false;
 	ControllerInput controllerInput;
 
 	std::shared_ptr<ImageWrapper> myImage;

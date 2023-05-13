@@ -2,7 +2,7 @@
 #include "JoystickView.h"
 
 
-BAKKESMOD_PLUGIN(JoystickView, "write a plugin description here", plugin_version, PLUGINTYPE_FREEPLAY)
+BAKKESMOD_PLUGIN(JoystickView, "JoystickView", plugin_version, PLUGINTYPE_FREEPLAY)
 
 std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
@@ -26,7 +26,17 @@ void JoystickView::onTick(std::string eventName) //Reminder : This function is c
 
 
 		if (!car.IsNull()) {
-			controllerInput = car.GetInput();
+			if (car.HasFlip())
+			{
+				controllerInput = car.GetInput();
+			}
+			else
+			{
+				if (!FreezeArrowWhenCarDontHaveFlip)
+				{
+					controllerInput = car.GetInput();
+				}
+			}
 		}
 		else
 		{

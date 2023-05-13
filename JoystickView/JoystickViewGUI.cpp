@@ -20,6 +20,8 @@ void JoystickView::RenderSettings()
 			});
 	}
 
+	ImGui::Checkbox("Freeze Arrow When Car Don't Have Flip", &FreezeArrowWhenCarDontHaveFlip);
+	ImGui::NewLine();
 	ImGui::SliderFloat("Arrow Location X", &arrowLocX, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Location Y", &arrowLocY, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Width", &arrowWidth, 0.f, 500.f);
