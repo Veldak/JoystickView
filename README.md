@@ -1,5 +1,7 @@
 # JoystickView
 
+This is the plugin from Grifflicious youtube video.
+
 ## Installation :
 
 - Download JoystickView.zip in the realease v1.0
