@@ -1,6 +1,6 @@
 # JoystickView
 
-This is the plugin from Grifflicious youtube video.
+This is the plugin from Grifflicious youtube video : https://www.youtube.com/watch?v=6QzQFv2xnmw
 
 ## Installation :
 
