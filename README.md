@@ -1,15 +1,19 @@
 # JoystickView
 
+<<<<<<< HEAD
 ##Changelog
 
 ###v1.1
 
 - hidding mouse cursor
 - can now change the window pos on the plugin interface
+=======
+This is the plugin from Grifflicious youtube video : https://www.youtube.com/watch?v=6QzQFv2xnmw
+>>>>>>> b6ae3df4317988abec1db17e491e1df53fc3b949
 
 ## Installation :
 
-- Download JoystickView.zip in the realease v1.0
+- Download JoystickView.zip v1.0 in the realease
 - Go in the bakkesmod folder and drag/drop the data + plugins folders
 - ingame, in the bakkesmod window go in the plugins tab -> pluginmanager, click on open plugin manager and check JoystickView to load it
 
