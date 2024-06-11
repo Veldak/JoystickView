@@ -1,15 +1,11 @@
 # JoystickView
 
-<<<<<<< HEAD
 ##Changelog
 
 ###v1.1
 
 - hidding mouse cursor
 - can now change the window pos on the plugin interface
-=======
-This is the plugin from Grifflicious youtube video : https://www.youtube.com/watch?v=6QzQFv2xnmw
->>>>>>> b6ae3df4317988abec1db17e491e1df53fc3b949
 
 ## Installation :
 
