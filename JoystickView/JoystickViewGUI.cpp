@@ -22,8 +22,12 @@ void JoystickView::RenderSettings()
 
 	ImGui::Checkbox("Freeze Arrow When Car Don't Have Flip", &FreezeArrowWhenCarDontHaveFlip);
 	ImGui::NewLine();
+	ImGui::SliderFloat("Overlay Location X", &windowPos.x, 0.f, 3840);
+	ImGui::SliderFloat("Overlay Location Y", &windowPos.y, 0.f, 2160.f);
+	ImGui::NewLine();
 	ImGui::SliderFloat("Arrow Location X", &arrowLocX, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Location Y", &arrowLocY, 0.f, 500.f);
+	ImGui::NewLine();
 	ImGui::SliderFloat("Arrow Width", &arrowWidth, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Height", &arrowHeight, 0.f, 500.f);
 }
@@ -36,7 +40,8 @@ void JoystickView::Render()
 	window_flags |= ImGuiWindowFlags_NoBackground;
 	window_flags |= ImGuiWindowFlags_NoTitleBar;
 
-
+	ImGui::SetNextWindowPos(windowPos);
+	ImGui::SetNextWindowSize(ImVec2(345.f, 520));
 	if (!ImGui::Begin(menuTitle_.c_str(), &isWindowOpen_, window_flags))
 	{
 		// Early out if the window is collapsed, as an optimization.
@@ -131,13 +136,13 @@ void JoystickView::SetImGuiContext(uintptr_t ctx)
 // Should events such as mouse clicks/key inputs be blocked so they won't reach the game
 bool JoystickView::ShouldBlockInput()
 {
-	return ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard;
+	return false;
 }
 
 // Return true if window should be interactive
 bool JoystickView::IsActiveOverlay()
 {
-	return true;
+	return false;
 }
 
 // Called when window is opened

@@ -1,5 +1,12 @@
 # JoystickView
 
+##Changelog
+
+###v1.1
+
+- hidding mouse cursor
+- can now change the window pos on the plugin interface
+
 ## Installation :
 
 - Download JoystickView.zip in the realease v1.0

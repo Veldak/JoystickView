@@ -18,6 +18,8 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 
 	//std::shared_ptr<bool> enabled;
 
+	ImVec2 windowPos = ImVec2(50.f, 50.f);
+
 	//Boilerplate
 	virtual void onLoad();
 	virtual void onUnload();

@@ -2,7 +2,7 @@
 #include "JoystickView.h"
 
 
-BAKKESMOD_PLUGIN(JoystickView, "JoystickView", plugin_version, PLUGINTYPE_FREEPLAY)
+BAKKESMOD_PLUGIN(JoystickView, "JoystickView", "1.1", PLUGINTYPE_FREEPLAY)
 
 std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
@@ -17,7 +17,7 @@ void JoystickView::onLoad()
 }
 
 
-void JoystickView::onTick(std::string eventName) //Reminder : This function is called a lot every second (idk how many)
+void JoystickView::onTick(std::string eventName) //Reminder : This function is called every frame
 {
 	if (gameWrapper->IsInFreeplay() || gameWrapper->IsInCustomTraining())
 	{
