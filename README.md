@@ -1,8 +1,8 @@
 # JoystickView
 
-##Changelog
+## Changelog
 
-###v1.1
+### v1.1
 
 - hidding mouse cursor
 - can now change the window pos on the plugin interface
