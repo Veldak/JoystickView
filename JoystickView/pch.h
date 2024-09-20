@@ -16,8 +16,14 @@
 
 extern std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
-template<typename S, typename... Args>
-void LOG(const S& format_str, Args&&... args)
+template <typename... Args>
+void LOG(std::string_view format_str, Args&&... args)
 {
-	_globalCvarManager->log(fmt::format(format_str, args...));
+	_globalCvarManager->log(std::vformat(format_str, std::make_format_args(args...)));
+}
+
+template <typename... Args>
+void LOG(std::wstring_view format_str, Args&&... args)
+{
+	_globalCvarManager->log(std::vformat(format_str, std::make_wformat_args(args...)));
 }

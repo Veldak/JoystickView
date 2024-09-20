@@ -13,6 +13,16 @@ std::string JoystickView::GetPluginName() {
 //  f2 -> plugins -> JoystickView
 void JoystickView::RenderSettings() 
 {
+	ImGui::Checkbox("Enable Car Arrow", &carArrowEnable);
+	ImGui::SliderFloat3("Car Arrow Location (X, Y, Z)", carArrowLocation, -150.f, 400.f);
+	ImGui::SliderFloat("Car Arrow Rotation Anchor Point", &carArrowRotationAnchorPoint, 0.f, 1.f);
+	ImGui::SliderFloat("Car Arrow Length", &carArrowLength, 0.f, 400.f);
+	ImGui::SliderFloat("Car Arrow Radius", &carArrowRadius, 0.f, 100.f);
+	ImGui::SliderInt("Car Arrow Segments", &carArrowSegments, 0, 50.f);
+	ImGui::Checkbox("Car Arrow Dynamic Length", &carArrowDynamicLength);
+
+	ImGui::Separator();
+
 	if (ImGui::Button("Open Plugin Window"))
 	{
 		gameWrapper->Execute([&](GameWrapper* gw) {
@@ -50,17 +60,17 @@ void JoystickView::Render()
 	}
 
 	// Dodge angle snapping
-	controllerInput.Yaw = (std::abs(controllerInput.Yaw) < 0.1 * std::abs(controllerInput.Pitch)) ? 0 : controllerInput.Yaw;
-	controllerInput.Pitch = (std::abs(controllerInput.Pitch) < 0.1 * std::abs(controllerInput.Yaw)) ? 0 : controllerInput.Pitch;
+	float inputSteer = (std::abs(controllerInput.Steer) < 0.1 * std::abs(controllerInput.Pitch)) ? 0 : controllerInput.Steer;
+	float inputPitch = (std::abs(controllerInput.Pitch) < 0.1 * std::abs(controllerInput.Steer)) ? 0 : controllerInput.Pitch;
 
 	// Calculate the angle in radians
-	float angleRadians = std::atan2(controllerInput.Yaw, controllerInput.Pitch);
+	float angleRadians = std::atan2(inputSteer, inputPitch);
 
 	// Convert the angle to degrees
 	float angleDegrees = angleRadians * (180.0f / M_PI);
 	float angle = (((6.28f * angleDegrees) / 360.f) + 3.14f) * -1;
 
-	if (controllerInput.Yaw == 0 && controllerInput.Pitch == 0) //makes the arrow pointing up at starting position
+	if (inputSteer == 0 && inputPitch == 0) //makes the arrow pointing up at starting position
 		angle = -6.28f;
 
 	/*ImGui::Text("degree : %f", angleDegrees);

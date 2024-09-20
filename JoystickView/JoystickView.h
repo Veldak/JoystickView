@@ -9,9 +9,14 @@
 #include "version.h"
 constexpr auto plugin_version = stringify(VERSION_MAJOR) "." stringify(VERSION_MINOR) "." stringify(VERSION_PATCH) "." stringify(VERSION_BUILD);
 
+#include "RenderingTools/RenderingTools.h"
+
+#define M_PI       3.14159265358979323846
+
 #define WHITE ImColor(255, 255, 255, 255)
 #define GREEN ImColor(0, 255, 0, 255)
 #define RED ImColor(255, 0, 0, 255)
+
 
 class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod::Plugin::PluginSettingsWindow, public BakkesMod::Plugin::PluginWindow
 {
@@ -29,6 +34,13 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	float arrowWidth = 25.f;
 	float arrowHeight = 100.f;
 
+	bool carArrowEnable = true;
+	float carArrowLocation[3];
+	float carArrowRotationAnchorPoint = 0.f;
+	float carArrowLength = 165.f;
+	float carArrowRadius = 10.f;
+	int carArrowSegments = 30;
+	bool carArrowDynamicLength = false;
 
 	bool FreezeArrowWhenCarDontHaveFlip = false;
 	ControllerInput controllerInput;
@@ -38,6 +50,10 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	void ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle);
 
 	void onTick(std::string eventName);
+	Quat RotationQuat(float angleDegrees, Vector axis);
+	double CalculateDistanceOfPointFromOrigin(float x, float y);
+	void DrawArrow(CanvasWrapper canvas, RT::Frustum& frust, Vector location, Quat rotation, float angleDegrees, float radius, float height, int segments, float roationAnchorPoint);
+	void Render(CanvasWrapper canvas);
 
 	// Inherited via PluginSettingsWindow
 	void RenderSettings() override;
