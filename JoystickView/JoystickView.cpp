@@ -2,7 +2,7 @@
 #include "JoystickView.h"
 
 
-BAKKESMOD_PLUGIN(JoystickView, "JoystickView", "1.1", PLUGINTYPE_FREEPLAY)
+BAKKESMOD_PLUGIN(JoystickView, "JoystickView", "1.2", PLUGINTYPE_FREEPLAY)
 
 std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
@@ -68,17 +68,17 @@ double JoystickView::CalculateDistanceOfPointFromOrigin(float x, float y)
 	return std::sqrt(x * x + y * y);
 }
 
-void JoystickView::DrawArrow(CanvasWrapper canvas, RT::Frustum& frust, Vector location, Quat rotation, float angleDegrees, float radius, float height, int segments, float roationAnchorPoint)
+void JoystickView::DrawArrow(CanvasWrapper canvas, RT::Frustum& frust, Vector location, Quat rotation, float angleDegrees, float radius, float length, int segments, float roationAnchorPoint)
 {
 	// Apply the 90 degree rotation to the cylinder quaternion because the initial rotation is not aligned with the car
 	Quat fixedCylinderRotation = rotation * RotationQuat(90, { 0, 1, 0 });
 	Quat cylinderRotated = fixedCylinderRotation * RotationQuat(angleDegrees * -1.f, { 1, 0, 0 });
 
 	Quat coneRotated = rotation * RotationQuat(angleDegrees, { 0, 0, 1 });
-	Vector coneLocation = location + RotateVectorWithQuat({ height * float(1.f - roationAnchorPoint), 0, 0}, coneRotated);
+	Vector coneLocation = location + RotateVectorWithQuat({ length * float(1.f - roationAnchorPoint), 0, 0}, coneRotated);
 
-	RT::Cylinder(location, cylinderRotated, radius * 0.5f, height).Draw(canvas, frust, segments, roationAnchorPoint);
-	RT::Cone(coneLocation, Vector(coneLocation - location), radius, height * 0.33f, 0.f, segments).Draw(canvas);
+	RT::Cylinder(location, cylinderRotated, radius * 0.5f, length).Draw(canvas, frust, segments, roationAnchorPoint);
+	RT::Cone(coneLocation, Vector(coneLocation - location), radius, length * 0.33f, 0.f, segments).Draw(canvas);
 }
 
 void JoystickView::Render(CanvasWrapper canvas)
@@ -104,19 +104,46 @@ void JoystickView::Render(CanvasWrapper canvas)
 	// Convert the angle to degrees
 	float angleDegrees = angleRadians * (180.0f / M_PI);
 
-	//makes the arrow pointing up at starting position if not touching the joystick
+	bool shouldDrawArrow = true;
+
+	//if not touching the joystick, makes the arrow pointing up at starting position 
 	if (inputSteer == 0 && inputPitch == 0)
+	{
 		angleDegrees = 0.f;
 
-	Vector arrowLocation = localCar.GetLocation() + RotateVectorWithQuat({ carArrowLocation[0], carArrowLocation[1], carArrowLocation[2] }, RotatorToQuat(localCar.GetRotation()));
-
-	float arrowLength = carArrowLength;
-	if (carArrowDynamicLength)
-	{
-		arrowLength = carArrowLength * CalculateDistanceOfPointFromOrigin(inputSteer, inputPitch);
+		if (carArrowHideWhenNoInputs)
+		{
+			shouldDrawArrow = false;
+		}
 	}
 
-	DrawArrow(canvas, frust, arrowLocation, RotatorToQuat(localCar.GetRotation()), angleDegrees, carArrowRadius, arrowLength, carArrowSegments, carArrowRotationAnchorPoint);
+	if (shouldDrawArrow)
+	{
+		Vector arrowLocation = localCar.GetLocation() + RotateVectorWithQuat({ carArrowLocation[0], carArrowLocation[1], carArrowLocation[2] }, RotatorToQuat(localCar.GetRotation()));
+
+		float arrowLength = 0.f;
+		if (carArrowDynamicLength)
+		{
+			arrowLength = carArrowLength * CalculateDistanceOfPointFromOrigin(inputSteer, inputPitch);
+		}
+		else
+		{
+			arrowLength = carArrowLength;
+		}
+
+		Quat arrowRotation;
+		if (carArrowPerpendicularAxis)
+		{
+			arrowRotation = RotatorToQuat(localCar.GetRotation()) * RotationQuat(90, { 0, 1, 0 });
+		}
+		else
+		{
+			arrowRotation = RotatorToQuat(localCar.GetRotation());
+		}
+
+		canvas.SetColor(LinearColor(carArrowColor[0] * 255.f, carArrowColor[1] * 255.f, carArrowColor[2] * 255.f, carArrowColor[3] * 255.f));
+		DrawArrow(canvas, frust, arrowLocation, arrowRotation, angleDegrees, carArrowRadius, arrowLength, carArrowSegments, carArrowRotationAnchorPoint);
+	}
 }
 
 void JoystickView::onUnload()

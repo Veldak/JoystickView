@@ -13,16 +13,6 @@ std::string JoystickView::GetPluginName() {
 //  f2 -> plugins -> JoystickView
 void JoystickView::RenderSettings() 
 {
-	ImGui::Checkbox("Enable Car Arrow", &carArrowEnable);
-	ImGui::SliderFloat3("Car Arrow Location (X, Y, Z)", carArrowLocation, -150.f, 400.f);
-	ImGui::SliderFloat("Car Arrow Rotation Anchor Point", &carArrowRotationAnchorPoint, 0.f, 1.f);
-	ImGui::SliderFloat("Car Arrow Length", &carArrowLength, 0.f, 400.f);
-	ImGui::SliderFloat("Car Arrow Radius", &carArrowRadius, 0.f, 100.f);
-	ImGui::SliderInt("Car Arrow Segments", &carArrowSegments, 0, 50.f);
-	ImGui::Checkbox("Car Arrow Dynamic Length", &carArrowDynamicLength);
-
-	ImGui::Separator();
-
 	if (ImGui::Button("Open Plugin Window"))
 	{
 		gameWrapper->Execute([&](GameWrapper* gw) {
@@ -40,6 +30,24 @@ void JoystickView::RenderSettings()
 	ImGui::NewLine();
 	ImGui::SliderFloat("Arrow Width", &arrowWidth, 0.f, 500.f);
 	ImGui::SliderFloat("Arrow Height", &arrowHeight, 0.f, 500.f);
+
+	ImGui::Separator();
+	ImGui::NewLine();
+
+	ImGui::Text("3D Car Arrow :");
+
+	ImGui::NewLine();
+
+	ImGui::Checkbox("Enable", &carArrowEnable);
+	ImGui::ColorEdit4("Color", carArrowColor);
+	ImGui::SliderFloat3("Location (X, Y, Z)", carArrowLocation, -150.f, 400.f);
+	ImGui::SliderFloat("Rotation Anchor Point", &carArrowRotationAnchorPoint, 0.f, 1.f);
+	ImGui::SliderFloat("Length", &carArrowLength, 0.f, 400.f);
+	ImGui::SliderFloat("Radius", &carArrowRadius, 0.f, 100.f);
+	ImGui::SliderInt("Segments", &carArrowSegments, 0, 50.f);
+	ImGui::Checkbox("Hide When No Inputs", &carArrowHideWhenNoInputs);
+	ImGui::Checkbox("Perpendicular Axis", &carArrowPerpendicularAxis);
+	ImGui::Checkbox("Dynamic Length", &carArrowDynamicLength);
 }
 
 

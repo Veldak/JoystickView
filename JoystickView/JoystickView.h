@@ -35,11 +35,14 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	float arrowHeight = 100.f;
 
 	bool carArrowEnable = true;
-	float carArrowLocation[3];
+	float carArrowLocation[3] = { 81.f, 0.f, 0.f };
+	float carArrowColor[4] = { 0.6f, 0.6f, 0.6f, 0.7f };
 	float carArrowRotationAnchorPoint = 0.f;
-	float carArrowLength = 165.f;
-	float carArrowRadius = 10.f;
-	int carArrowSegments = 30;
+	float carArrowLength = 89.f;
+	float carArrowRadius = 6.f;
+	int carArrowSegments = 20;
+	bool carArrowHideWhenNoInputs = true;
+	bool carArrowPerpendicularAxis = true;
 	bool carArrowDynamicLength = false;
 
 	bool FreezeArrowWhenCarDontHaveFlip = false;
@@ -52,7 +55,7 @@ class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod:
 	void onTick(std::string eventName);
 	Quat RotationQuat(float angleDegrees, Vector axis);
 	double CalculateDistanceOfPointFromOrigin(float x, float y);
-	void DrawArrow(CanvasWrapper canvas, RT::Frustum& frust, Vector location, Quat rotation, float angleDegrees, float radius, float height, int segments, float roationAnchorPoint);
+	void DrawArrow(CanvasWrapper canvas, RT::Frustum& frust, Vector location, Quat rotation, float angleDegrees, float radius, float length, int segments, float roationAnchorPoint);
 	void Render(CanvasWrapper canvas);
 
 	// Inherited via PluginSettingsWindow
