@@ -20,9 +20,6 @@ constexpr auto plugin_version = stringify(VERSION_MAJOR) "." stringify(VERSION_M
 
 class JoystickView: public BakkesMod::Plugin::BakkesModPlugin, public BakkesMod::Plugin::PluginSettingsWindow, public BakkesMod::Plugin::PluginWindow
 {
-
-	//std::shared_ptr<bool> enabled;
-
 	ImVec2 windowPos = ImVec2(50.f, 50.f);
 
 	//Boilerplate
